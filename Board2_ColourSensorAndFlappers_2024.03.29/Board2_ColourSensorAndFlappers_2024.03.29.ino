@@ -121,7 +121,7 @@ void loop() {
       Serial.printf("That's a Little Green Guy R: %d, G: %d, B: %d, C %d\n", r, g, b, c);
       Bot.ToPosition("S1", servoLeft);
     } else if((r >= 28 && r <= 36) && (g >= 30 && g <= 41) && (b >=27 && b <= 36)) {
-        Serial.printf("It's Blank u dumb motherfucker R: %d, G: %d, B: %d, C %d\n", r, g, b, c);
+        Serial.printf("It's Blank no gem here R: %d, G: %d, B: %d, C %d\n", r, g, b, c);
         Bot.ToPosition("S1", servoMiddle);
     }
       else{
