@@ -1,6 +1,5 @@
-//march 29, 2024
-//by king dylan himself
-
+//march 30 2024
+// day 3 of code and such for the colour sensor 
 #define PRINT_COLOUR                                  // uncomment to turn on output of colour sensor data
 #define SERVO_PIN 41
 
@@ -30,7 +29,7 @@
         // right encoder A signal is connected to pin 19 GPIO11 (J11)
 #define ENCODER_RIGHT_B     12
         // right encoder B signal is connected to pin 20 GPIO12 (J12)
-       #define POT_R1              1
+      #define POT_R1              1
 const int servoLeft = 800;     
 const int servoMiddle = 1400;   
 const int servoRight = 2150;  
@@ -66,7 +65,7 @@ unsigned long lastHeartbeat  = 0;                     // time of last heartbeat 
 unsigned long curMillis      = 0;                     // current time, in milliseconds
 unsigned long prevMillis     = 0;                     // start time for delay cycle, in milliseconds
 
-const int cLeftAdjust = 6;
+const int cLeftAdjust = 0;
         // Amount to slow down left motor relative to right
 const int cRightAdjust = 0;
         // Amount to slow down right motor relative to left
@@ -140,10 +139,10 @@ void setup() {
 
   Bot.servoBegin("S1", SERVO_PIN);
   Bot.driveBegin("D1", LEFT_MOTOR_A, LEFT_MOTOR_B, RIGHT_MOTOR_A,RIGHT_MOTOR_B); // set up motors as Drive 1
-    LeftEncoder.Begin(ENCODER_LEFT_A, ENCODER_LEFT_B,&Bot.iLeftMotorRunning ); // set up left encoder
-   RightEncoder.Begin(ENCODER_RIGHT_A, ENCODER_RIGHT_B,&Bot.iRightMotorRunning ); // set up right encoder
-    pinMode(MODE_BUTTON, INPUT_PULLUP);
-       modePBDebounce = 0;
+  LeftEncoder.Begin(ENCODER_LEFT_A, ENCODER_LEFT_B,&Bot.iLeftMotorRunning ); // set up left encoder
+  RightEncoder.Begin(ENCODER_RIGHT_A, ENCODER_RIGHT_B,&Bot.iRightMotorRunning ); // set up right encoder
+  pinMode(MODE_BUTTON, INPUT_PULLUP);
+  modePBDebounce = 0;
         // reset debounce timer count
 
         // Set up mode pushbutton
@@ -238,7 +237,6 @@ void loop() {
       }
 
   uint16_t r, g, b, c;                                // RGBC values from TCS34725
-  
   digitalWrite(cTCSLED, !digitalRead(cLEDSwitch));    // turn on onboard LED if switch state is low (on position)
   if (tcsFlag) {                                      // if colour sensor initialized
     tcs.getRawData(&r, &g, &b, &c);                   // get raw RGBC values
@@ -247,14 +245,14 @@ void loop() {
       if(timeUp500msec == true){
     if((r >= 22 && r <= 27) && (g >= 31 && g <= 41) && (b >=22 && b <= 26)){
       Serial.printf("That's a Little Green Guy R: %d, G: %d, B: %d, C %d\n", r, g, b, c);
-      Bot.ToPosition("S1", servoLeft);
+      Bot.ToPosition("S1", servoRight);
     } else if((r >= 28 && r <= 36) && (g >= 30 && g <= 41) && (b >=27 && b <= 36)) {
-        Serial.printf("It's Blank u dumb motherfucker R: %d, G: %d, B: %d, C %d\n", r, g, b, c);
-        Bot.ToPosition("S1", servoMiddle);
+        Serial.printf("It's Blank R: %d, G: %d, B: %d, C %d\n", r, g, b, c);
+        Bot.ToPosition("S1", servoRight);
     }
       else{
      Serial.printf("That's Not a Little Green Guy R: %d, G: %d, B: %d, C %d\n", r, g, b, c);
-     Bot.ToPosition("S1", servoLeft);
+     Bot.ToPosition("S1", servoRight);
     } 
     timeUp500msec= false;
       }
